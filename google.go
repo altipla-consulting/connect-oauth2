@@ -14,7 +14,7 @@ import (
 func GoogleIDToken(isProduction bool, scope string) connect.Interceptor {
 	var ts oauth2.TokenSource
 	var initErr error
-	if !isProduction {
+	if isProduction {
 		ts, initErr = idtoken.NewTokenSource(context.Background(), scope)
 	}
 
