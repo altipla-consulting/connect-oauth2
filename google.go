@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
+	"strings"
 
 	"connectrpc.com/connect"
 	"golang.org/x/oauth2"
@@ -23,7 +24,7 @@ func GoogleIDToken(isProduction bool, scope string) connect.Interceptor {
 		if err != nil {
 			initErr = fmt.Errorf("connect-oauth2: cannot retrieve local user token: %w", err)
 		} else {
-			ts = oauth2.StaticTokenSource(&oauth2.Token{AccessToken: string(output)})
+			ts = oauth2.StaticTokenSource(&oauth2.Token{AccessToken: strings.TrimSpace(string(output))})
 		}
 	}
 
