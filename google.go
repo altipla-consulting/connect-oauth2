@@ -3,6 +3,7 @@ package oauth2
 import (
 	"context"
 	"fmt"
+	"os/exec"
 
 	"connectrpc.com/connect"
 	"golang.org/x/oauth2"
@@ -16,6 +17,14 @@ func GoogleIDToken(isProduction bool, scope string) connect.Interceptor {
 	var initErr error
 	if isProduction {
 		ts, initErr = idtoken.NewTokenSource(context.Background(), scope)
+	} else {
+		cmd := exec.Command("gcloud", "auth", "print-identity-token")
+		output, err := cmd.Output()
+		if err != nil {
+			initErr = fmt.Errorf("connect-oauth2: cannot retrieve local user token: %w", err)
+		} else {
+			ts = oauth2.StaticTokenSource(&oauth2.Token{AccessToken: string(output)})
+		}
 	}
 
 	return connect.UnaryInterceptorFunc(func(next connect.UnaryFunc) connect.UnaryFunc {
