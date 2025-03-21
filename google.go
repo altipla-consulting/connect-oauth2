@@ -33,7 +33,7 @@ func GoogleIDToken(isProduction bool, scope string) connect.Interceptor {
 				return nil, fmt.Errorf("connect-oauth2: cannot initialize token source: %w", initErr)
 			}
 
-			if !isProduction {
+			if ts == nil {
 				return next(ctx, req)
 			}
 
