@@ -30,6 +30,7 @@ func (l *localTokenSource) Token() (*oauth2.Token, error) {
 
 // GoogleIDToken adds an ID token as a bearer header to the requests. It needs to check for production environments to
 // avoid trying to generate an id token in the local computer where it's not available.
+// deprecated: use GoogleIDTokenV2 instead
 func GoogleIDToken(isProduction bool, scope string) connect.Interceptor {
 	var ts oauth2.TokenSource
 	var initErr error
