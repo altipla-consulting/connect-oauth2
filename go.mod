@@ -3,7 +3,6 @@ module github.com/altipla-consulting/connect-oauth2
 go 1.26.0
 
 require (
-	connectrpc.com/connect v1.18.1
 	connectrpc.com/connect/v2 v2.0.0
 	golang.org/x/oauth2 v0.27.0
 	google.golang.org/api v0.223.0
